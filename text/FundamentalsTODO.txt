@@ -1,0 +1,10 @@
+Fundamentals November:
+
+	Set up project
+	
+	- Set up XAMPP
+	- Go set up the database
+	- Add user table to the database/Add example data
+	- Make a config file with database info
+	- Make form
+	- Make login.php -> check db
