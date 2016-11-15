@@ -1,0 +1,45 @@
+/*
+* @Author: Charles
+* @Date:   2016-11-07 13:02:52
+* @Last Modified by:   Charles Rathe
+* @Last Modified time: 2016-11-14 18:40:29
+*/
+    .container{
+        float: left;
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-top: 150px;
+    }
+    .col-lg-4 col-lg-offset-4{
+        float: left;
+        width: 100%;
+    }
+    
+    .row margin-row {
+        float: left;
+        width: 100%;
+        margin-left:25%;
+        margin-right: 25%;
+        margin-top: 500px;
+    }
+
+    button.button-primary:hover {
+        background-color: aliceblue;
+    }
+
+    body {
+        background-color: azure;
+    }
+
+    .myModal {
+        width: 80%;
+        margin: 0 auto;
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .modal-dialogue {
+        width: 40%;
+        margin: 0 auto;
+    }
