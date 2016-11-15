@@ -12,6 +12,27 @@
 
     <body>
 
+        <!-- If $_SESSION is set, redirect -->
+        <!-- If $_COOKIE is set, fill in forms dynamically -->
+        <?php 
+
+            if(isset($_SESSION["email"])){
+                header("Location: homepage.php");
+            }
+
+            if(isset($_COOKIE["email"])){
+                $email_fill = $_COOKIE["email"];
+                $pwd_fill = $_COOKIE["pwd"];
+            }
+
+            else {
+                $email_fill = "example@test.com";
+                $pwd_fill =  "*********";
+            }
+
+
+        ?>
+
         <!-- Log in box -->
         <div class="container">
             <div class="row">
@@ -29,11 +50,11 @@
                             <form action="login.php" method="post">
                                 <div class="form-group">
                                     <label for="email">Email address:</label>
-                                    <input type="email" class="form-control" id="email" name="email">
+                                    <input type="email" placeholder=<?php echo $email_fill; ?> class="form-control" id="email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Password:</label>
-                                    <input type="password" class="form-control" id="pwd" name="pwd">
+                                    <input type="password" placeholder=<?php echo $pwd_fill; ?> class="form-control" id="pwd" name="pwd">
                                 </div>
                                 <div class="checkbox">
                                     <label><input type="checkbox" name="remember"> Remember me</label>
