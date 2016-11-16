@@ -3,7 +3,9 @@
 	/* NOTE: To access form inputs from previous page - Use $_POST["<input name>"] --> */
 	$email = $_POST["email"];
 	$pass = $_POST["pwd"];
-	$rem = $_POST["remember"];  // Use cookies -- http://php.net/manual/en/features.cookies.php
+	if(isset($_POST["remember"])){}
+		$rem = $_POST["remember"];  // Use cookies -- http://php.net/manual/en/features.cookies.php
+	}
 
 	/* Call Database */
 	define('DB_SERVER', 'localhost');
@@ -22,9 +24,11 @@
 		echo "Connected";
 	}
 
+	/* Validate correct form? */
 	/* Validate username/password */
 	
 
 	/* Redirect to homepage if validated or redirect to welcome page if not */
+	// if -> header("Location: homepage or whatever");
 ?>
 
