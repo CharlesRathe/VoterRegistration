@@ -21,3 +21,13 @@ body {
     width: 40%;
     margin: 0 auto;
 }
+
+.form-group.required label:after {
+    content: " *";
+    color: red;
+}
+
+.form-group.short {
+    max-width: 20%;
+
+}
