@@ -15,7 +15,7 @@
 
 
 	/* Get Form Variables */
-	$full_name = $_POST["fn"] . $_POST["ln"];
+	$full_name = ucfirst($_POST["fn"]) . " " . ucfirst($_POST["ln"]);
 	$email = $_POST["email"];
 	$pass = $_POST["pwd"];
 	$ver = $_POST["ver-pwd"];
@@ -23,7 +23,7 @@
 	$add = $_POST["address"];
 	$zip = $_POST["zip"];
 	$state = $_POST["state"];
-	$perm = 2;
+	$perm = 3;
 
 	// ID type/num
 	$idt = $_POST["idt"];
@@ -96,16 +96,22 @@
 
 		$insert = "INSERT INTO users(`id`, `full_name`, `email`, `password`, `address`, `zipcode`, `permissions`, `dob`, `state`, `gender`, `party_aff`, `license_nmbr`, `ssn`, `passport_nmbr`) VALUES (" . $maxID . ", '" . $full_name . "', '" . $email . "', '" . $pass . "', '" . $add . "', " . $zip . ", " . $perm . ", '" . $date . "', '" . $state . "', " . $gen . ", " . $aff . ", " . $idString . ")";
 
-		echo $insert;
-
 		$success = $con->query($insert);
 
 		/* If successfully put into db, set session variables and redirect to homepage */
 		if($success){
-			$_SESSION["voterID"] = $voterID;
+
+			$get_prec = "SELECT * FROM precincts WHERE zip_code = " . $zip;
+			$res = $con->query($get_prec);
+			$precinct_res = $res->fetch_assoc();
+			$precinct = $precinct_res["precinct_id"];
+
+			$_SESSION["voterID"] = $maxID;
 			$_SESSION["permissions"] = 3;
 			$_SESSION["full_name"] = $full_name;
 			$_SESSION["email"] = $email;
+			$_SESSION["precinct"] = $precinct;
+			$_SESSION["precinct_name"] = $precinct_res["precinct_name"];
 			header("Location: homepage.php");
 		}
 

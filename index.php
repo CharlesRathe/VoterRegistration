@@ -15,9 +15,9 @@
         <!-- If $_SESSION is set, redirect -->
         <?php 
 
-            if(isset($_SESSION["email"])){
-                header("Location: homepage.php");
-            }
+            // if(isset($_SESSION["email"])){
+            //     header("Location: homepage.php");
+            // }
 
             $email_fill = "example@test.com";
             $pwd_fill =  "*********";
@@ -42,11 +42,11 @@
                             <form action="php/login.php" method="post">
                                 <div class="form-group">
                                     <label for="email">Email address:</label>
-                                    <input type="email" placeholder=<?php echo $email_fill; ?> class="form-control" id="email" name="email">
+                                    <input type="email" required="required" placeholder=<?php echo $email_fill; ?> class="form-control" id="email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Password:</label>
-                                    <input type="password" placeholder=<?php echo $pwd_fill; ?> class="form-control" id="pwd" name="pwd">
+                                    <input type="password" required="requried" placeholder=<?php echo $pwd_fill; ?> class="form-control" id="pwd" name="pwd">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>

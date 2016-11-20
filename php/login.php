@@ -1,17 +1,10 @@
 <?php session_start();
 
-	/* NOTE: To access form inputs from previous page - Use $_POST["<input name>"] --> */
-	$email = $_POST["email"];
-	$pass = $_POST["pwd"];
-	if(isset($_POST["remember"])){}
-		$rem = $_POST["remember"];  // Use cookies -- http://php.net/manual/en/features.cookies.php
-	}
-
 	/* Call Database */
 	define('DB_SERVER', 'localhost');
 	define('DB_USERNAME', 'root');
 	define('DB_PASSWORD', '');
-	define('DB_DATABASE', 'voterregistration');
+	define('DB_DATABASE', 'vote');
 	$con = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
 	/* Check that connection set up successful */
@@ -20,15 +13,49 @@
 		echo "Err no." . mysqli_connect_errno() . PHP_EOL;
 	}
 
-	else{
-		echo "Connected";
+	/* Validate form entered */
+	if(isset($_POST["email"]) && isset($_POST["pwd"])){
+
+		$validate = "SELECT * FROM users WHERE email = '" . $_POST["email"] . "'";
+		$res = $con->query($validate);
+
+		/* Check that a user exists with that email */
+		if($res->num_rows > 0){
+			$row = $res->fetch_assoc();
+
+
+			/* Check that password matches */
+			if($_POST["pwd"] == $row["password"]){
+
+				/* Set session variables */
+				$get_prec = "SELECT * FROM precincts WHERE zip_code = " . $row["zipcode"];
+				$res = $con->query($get_prec);
+				$precinct_res = $res->fetch_assoc();
+				$precinct = $precinct_res["precinct_id"];
+
+				$_SESSION["precinct"] = $precinct;
+				$_SESSION["precinct_name"] = $precinct_res["precinct_name"];
+				$_SESSION["email"] = $row["email"];
+				$_SESSION["voterID"] = $row["id"];
+				$_SESSION["permissions"] = $row["permissions"];
+				$_SESSION["full_name"] = $row["full_name"];
+
+				/* Redirect to homepage if validated */
+				header("Location: homepage.php");
+			}
+
+			else{
+				/* Set message and redirect if password doesn't match */
+				$_SESSION["error"] = "Incorrect password";
+				header("Location: ../index.php");
+			}
+		}
+
+		else{
+			/* Set message and redirect if no user found */
+			$_SESSION["error"] = "No user with that email";
+			header("Location: ../index.php");
+		}
 	}
-
-	/* Validate correct form? */
-	/* Validate username/password */
-	
-
-	/* Redirect to homepage if validated or redirect to welcome page if not */
-	// if -> header("Location: homepage or whatever");
 ?>
 
