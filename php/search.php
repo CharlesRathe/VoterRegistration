@@ -1,24 +1,76 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<?php session_start() ?>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-        <!--<link rel="stylesheet" href="css/main.css"> -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include '../html/bootstrap.html'; ?>
+        <title>Voter Registration Homepage</title>
+        <link rel="stylesheet" href="../css/homepage.css" type="text/css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+
+        <?php
+
+            $search = $_POST["search"];
+
+            /* Call Database */
+            define('DB_SERVER', 'localhost');
+            define('DB_USERNAME', 'root');
+            define('DB_PASSWORD', '');
+            define('DB_DATABASE', 'vote');
+            $con = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+            /* Check that connection set up successful */
+            if(!$con){
+                echo "Couldn't connect to database";
+                echo "Err no." . mysqli_connect_errno() . PHP_EOL;
+            }
+
+            $search_profiles = "SELECT * FROM users where CAST(id as CHAR) LIKE '%" . $search . "%'";
+            $res = $con->query($search_profiles);
 
 
+        ?>
+
+        <div class="container" style="width: 100%">
+            <?php include 'navbar-admin.php';?>
+
+            <div class="jumbotron">
+                <h1>Search Results by Catagory</h1>
+            </div>
+
+            <ul class="nav nav-tabs">
+                    <li class="active" style="width:50%"><a data-toggle="tab" href="#users">Current Elections</a></li>
+                    <li style="width:50%"><a data-toggle="tab" href="#elections">Future Elections</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="users" class="tab-pane fade in active">
+                    <div class="list-group">
+                        <!-- For each election: -->
+                        <?php
+
+                            if($res->num_rows > 0){
+
+                                while($row = $res->fetch_assoc()){
+                                    echo '<button type="button" class="list-group-item">' . $row['id'] . "    -    " . $row['full_name'] . '</button>';
+                                    
+                                }
+                            }
+                        ?>
+                    </div>
+
+                </div>
+                <div id="elections"  class="tab-pane fade">
+                    <div class="list-group">
+                        <!-- For each election: -->
+                        <button type="button" class="list-group-item">Cras justo odio</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </body>
+
 </html>

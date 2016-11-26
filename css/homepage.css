@@ -1,3 +1,11 @@
 .jumbotron {
 	background-color: #A05F5F;
 }
+
+.button-left {
+	float:left;
+}
+
+span.button-right {
+	float:right;
+}

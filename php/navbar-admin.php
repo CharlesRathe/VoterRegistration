@@ -20,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-check" aria-hidden="true"></span>VotersChoice</a>
+      <a class="navbar-brand" href="homepage.php"><span class="glyphicon glyphicon-check" aria-hidden="true"></span>VotersChoice</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,13 +29,18 @@
         <li class="active"><a href="homepage.php">Home</a></li>
         <li><a href="profile.php">My Profile &nbsp <span class="badge"> <?php echo $perm; ?></a></li>
       </ul>
-      <form class="navbar-form navbar-left" action="search.php" method="post">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+      <?php if ($perm == "ADMIN"){ ?>
+        <form class="navbar-form navbar-left" action="search.php" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" name="search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      <?php } ?>
       <ul class="nav navbar-nav navbar-right">
+        <?php if ($perm == "ADMIN" || $perm == "CM"){ ?>
+          <li><a href="create_election.php">Create Election&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp| 
+        <?php } ?>
         <li><a href="logout.php">Log out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
