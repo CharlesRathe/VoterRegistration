@@ -132,11 +132,20 @@
 --    CONSTRAINT Candidates_pk PRIMARY KEY (candidate_id)
 --);
 INSERT INTO Candidates (candidate_id, candidate_name, candidate_state, candidate_bio, office_id)
-VALUES (1, 'Barack Obama', 'IA', 'Barack is a Democrat running for IA Governor.', 1),
-(2, 'Terry Branstad', 'IA', 'Terry is a Republican running for IA Governor.', 1),
+VALUES (1, 'Barack Obama', 'IA', 'Barack is a Democrat running for Iowa Governor.', 1),
+(2, 'Terry Branstad', 'IA', 'Terry is a Republican running for Iowa Governor.', 1),
 (3, 'Hillary Clinton', 'NY', 'Hillary is a Democrat running for President of the United States.', 2),
 (4, 'Donald Trump', 'NY', 'Donald is a Republican running for President of the United States.', 2),
-(5, 'Jill Stein', 'MA', 'Jill is a Green Party Member running for President of the United States.', 2);
+(5, 'Jill Stein', 'MA', 'Jill is a Green Party Member running for President of the United States.', 2),
+(6, 'Monica Vernon', 'IA', 'Monica is a Democrat running for US Representative.', 3),
+(7, 'Rod Blum', 'IA', 'Rod is a Republican running for US Representative.', 3),
+(8, 'David Loebsack', 'IA', 'David is a Democrat running for US Representative.', 4),
+(9, 'Christopher Peters', 'IA', 'Christopher is a Republican running for US Representative.', 4),
+(10, 'Bruce Braley', 'IA', 'Bruce is a Democrat running for US Senator.', 5),
+(11, 'Joni Ernst', 'IA', 'Joni is a Republican running for US Senator.', 5),
+(12, 'Patty Judge', 'IA', 'Patty is a Democrat running for US Senator.', 6),
+(13, 'Charles Grassley', 'IA', 'Charles is a Republican running for US Senator.', 6);
+
 
 
 
@@ -151,12 +160,12 @@ VALUES (1, 'Barack Obama', 'IA', 'Barack is a Democrat running for IA Governor.'
 --    CONSTRAINT Election_pk PRIMARY KEY (election_id)
 --);
 INSERT INTO Election (election_id, date, active, completed)
-VALUES (1, '2018-11-06', TRUE, FALSE), -- IA Governor Election
+VALUES (1, '2018-11-06', TRUE, FALSE), -- Iowa Governor Election
 (2, '2020-11-03', TRUE, FALSE), -- 2020 Presidential Election
-(3, '2018-11-06', TRUE, FALSE), -- IA US Representative 1
-(4, '2018-11-06', TRUE, FALSE), -- IA US Representative 2
-(5, '2020-11-03', TRUE, FALSE), -- IA US Senator 1
-(6, '2022-11-08', TRUE, FALSE), -- IA US Senator 2
+(3, '2018-11-06', TRUE, FALSE), -- Iowa US Representative 1
+(4, '2018-11-06', TRUE, FALSE), -- Iowa US Representative 2
+(5, '2020-11-03', TRUE, FALSE), -- Iowa US Senator 1
+(6, '2022-11-08', TRUE, FALSE), -- Iowa US Senator 2
 (7,'2008-11-04', FALSE, TRUE), -- Past Presidential Election
 (8,'2012-11-06', FALSE, TRUE), -- Past Presidential Election
 (9,'2014-11-04', FALSE, TRUE), -- Past Governor Election
@@ -308,5 +317,17 @@ VALUES (1, 'Iowa City - 1', 'IA', 52240),
 --    CONSTRAINT Races_pk PRIMARY KEY (race_id)
 --);
 INSERT INTO Races (race_id, num_candidates, election_id, office_id)
-VALUES (1, 2, 1, 1), -- IA Governor
-(2, 3, 2, 2); -- US President
+VALUES (1, 2, 7, 2), -- Past US President 1
+(2, 2, 8, 2), -- Past US President 2
+(3, 2, 9, 1), -- Past Iowa Governor
+(4, 2, 1, 1), -- Current Iowa Governor
+(5, 3, 2, 2), -- Current US President
+(6, 2, 3, 3), -- Current Iowa US Representative 1
+(7, 2, 4, 4), -- Current Iowa US Representative 2
+(8, 2, 5, 5), -- Current Iowa US Senator 1
+(9, 2, 6, 6), -- Current Iowa US Senator 2
+(10, 2, 10, 2), -- Future US President
+(11, 2, 11, 5), -- Future Iowa US Senator 1
+(12, 2, 12, 6), -- Future Iowa US Senator 2
+(13, 2, 13, 1); -- Future Iowa Governor
+
