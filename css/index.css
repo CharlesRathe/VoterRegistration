@@ -35,3 +35,7 @@ body {
 .homepage {
     width: 30%
 }
+
+.centered {
+    margin-top:10px;
+}

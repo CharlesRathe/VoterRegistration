@@ -15,10 +15,6 @@
         <!-- If $_SESSION is set, redirect -->
         <?php 
 
-            // if(isset($_SESSION["email"])){
-            //     header("Location: homepage.php");
-            // }
-
             $email_fill = "example@test.com";
             $pwd_fill =  "*********";
 
@@ -46,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Password:</label>
-                                    <input type="password" required="requried" placeholder=<?php echo $pwd_fill; ?> class="form-control" id="pwd" name="pwd">
+                                    <input type="password" required="required" placeholder=<?php echo $pwd_fill; ?> class="form-control" id="pwd" name="pwd">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -123,17 +119,24 @@
                                     <select class="form-control" id="gen" name="gen">
                                         <option value="M">M</option>
                                         <option value="F">F</option>
+                                        <option value="A">Agender</option>
+                                        <option value="T">Transgender</option>
+                                        <option value="W">Weeaboo</option>
+                                        <option value="R">Sexually Identify as "The Rock"</option>
                                         <option value="O">Prefer not to answer/Other</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="aff">Party Affiliation (if any)</label>
                                     <select class="form-control" id="aff" name="aff">
-                                        <option value="dem">Democrat</option>
-                                        <option value="rep">Republican</option>
+                                        <option value="dem">Democratic Party</option>
+                                        <option value="rep">Republican Party</option>
                                         <option value="grn">Green Party</option>
-                                        <option value="lmn">Legalize Marijuana Now</option>
-                                        <option value="lib">Libertarian</option>
+                                        <option value="lmn">Legalize Marijuana Now Party</option>
+                                        <option value="lib">Libertarian Party</option>
+                                        <option value="bul">Bull Moose Party</option>
+                                        <option value="scl">Socialist Party of America Party</option>
+                                        <option value="nsp">National Socialist Party</option>
                                         <option value="non">None</option>
                                     </select>
                                 </div>
@@ -147,6 +150,7 @@
             </div>
         </div>
 
+        <!-- Alerts -->
         <?php 
             if(isset($_SESSION["error"])){
                 echo "<script type='text/javascript'>alert('" . $_SESSION["error"] . "')</script>";

@@ -16,7 +16,7 @@
 	/* Validate form entered */
 	if(isset($_POST["email"]) && isset($_POST["pwd"])){
 
-		$validate = "SELECT * FROM users WHERE email = '" . $_POST["email"] . "'";
+		$validate = "SELECT * FROM users WHERE email = '" . $_POST["email"] . "'"; // . is concat // SELECT * FROM users WHERE email= '<email>'
 		$res = $con->query($validate);
 
 		/* Check that a user exists with that email */
@@ -39,6 +39,11 @@
 				$_SESSION["voterID"] = $row["id"];
 				$_SESSION["permissions"] = $row["permissions"];
 				$_SESSION["full_name"] = $row["full_name"];
+				$_SESSION["dob"] = $row["dob"];
+				$_SESSION["address"] = $row["address"];
+				$_SESSION["party_aff"] = $row["pary_aff"];
+				$_SESSION["gender"] = $row["gender"];
+				$_SESSION["valid"] = $row["valid"];
 
 				/* Redirect to homepage if validated */
 				header("Location: homepage.php");

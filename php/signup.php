@@ -7,12 +7,12 @@
 	define('DB_DATABASE', 'vote');
 	$con = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
+	$validation = rand(pow(10, 3), pow(10, 4)-1);
 	/* Check that connection set up successful */
 	if(!$con){
 		echo "Couldn't connect to database";
 		echo "Err no." . mysqli_connect_errno() . PHP_EOL;
 	}
-
 
 	/* Get Form Variables */
 	$full_name = ucfirst($_POST["fn"]) . " " . ucfirst($_POST["ln"]);
@@ -94,7 +94,7 @@
 
 		/* Put new user into the database (need to generate voter id) -> $voterID */
 
-		$insert = "INSERT INTO users(`id`, `full_name`, `email`, `password`, `address`, `zipcode`, `permissions`, `dob`, `state`, `gender`, `party_aff`, `license_nmbr`, `ssn`, `passport_nmbr`) VALUES (" . $maxID . ", '" . $full_name . "', '" . $email . "', '" . $pass . "', '" . $add . "', " . $zip . ", " . $perm . ", '" . $date . "', '" . $state . "', " . $gen . ", " . $aff . ", " . $idString . ")";
+		$insert = "INSERT INTO users(`id`, `full_name`, `email`, `password`, `address`, `zipcode`, `permissions`, `dob`, `state`, `gender`, `party_aff`, `license_nmbr`, `ssn`, `passport_nmbr`, `valid`, `validation_code`) VALUES (" . $maxID . ", '" . $full_name . "', '" . $email . "', '" . $pass . "', '" . $add . "', " . $zip . ", " . $perm . ", '" . $date . "', '" . $state . "', " . $gen . ", " . $aff . ", " . $idString . ", 0, " . $validate . ")";
 
 		$success = $con->query($insert);
 
@@ -112,6 +112,8 @@
 			$_SESSION["email"] = $email;
 			$_SESSION["precinct"] = $precinct;
 			$_SESSION["precinct_name"] = $precinct_res["precinct_name"];
+			$_SESSION["valid"] = 0;
+			mail($_SESSION["email"], "Voter's Choice - VALIDATE", "Please select the validate menu option and input the following code: " . $validate);
 			header("Location: homepage.php");
 		}
 

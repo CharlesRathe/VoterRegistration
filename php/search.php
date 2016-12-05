@@ -31,6 +31,8 @@
             $search_profiles = "SELECT * FROM users where CAST(id as CHAR) LIKE '%" . $search . "%'";
             $res = $con->query($search_profiles);
 
+            $search_elections = "SELECT * FROM election WHERE CAST(election_id as CHAR) LIKE '%" . $search . "%'";
+            $res2 = $con->query($search_elections);
 
         ?>
 
@@ -42,30 +44,40 @@
             </div>
 
             <ul class="nav nav-tabs">
-                    <li class="active" style="width:50%"><a data-toggle="tab" href="#users">Current Elections</a></li>
-                    <li style="width:50%"><a data-toggle="tab" href="#elections">Future Elections</a></li>
+                    <li class="active" style="width:50%"><a data-toggle="tab" href="#users">Matching Voter IDs</a></li>
+                    <li style="width:50%"><a data-toggle="tab" href="#elections">Matching Election IDs</a></li>
             </ul>
             <div class="tab-content">
                 <div id="users" class="tab-pane fade in active">
                     <div class="list-group">
+                        <form action="profile.php" method="post">
                         <!-- For each election: -->
                         <?php
 
                             if($res->num_rows > 0){
 
-                                while($row = $res->fetch_assoc()){
-                                    echo '<button type="button" class="list-group-item">' . $row['id'] . "    -    " . $row['full_name'] . '</button>';
-                                    
+                                while($row = $res->fetch_assoc()){ ?>
+                                    <div class="form-group"> <?php
+                                    echo '<button type="submit" name="submit" value=' . $row["id"] .' class="list-group-item">Voter ID: ' . $row['id'] . "    -    Name: " . $row['full_name'] . '</button>'; ?>
+                                    </div>
+                                    <?php
                                 }
                             }
-                        ?>
+                            ?>
+                        </form>
                     </div>
 
                 </div>
                 <div id="elections"  class="tab-pane fade">
                     <div class="list-group">
                         <!-- For each election: -->
-                        <button type="button" class="list-group-item">Cras justo odio</button>
+                        <form action="election.php" method="post">
+                            <?php if($res2->num_rows > 0){
+                                while($row2 = $res2->fetch_assoc()){ 
+                                    echo '<button type="submit" value="' . $row2["election_id"] .'" name="election_id" class="list-group-item">Election ID: ' . $row2['election_id'] . "    -    Date: " . $row2['date'] . '</button>';
+                                }
+                            } ?>
+                        </form>
                     </div>
                 </div>
 

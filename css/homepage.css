@@ -9,3 +9,37 @@
 span.button-right {
 	float:right;
 }
+
+.centered {
+	margin-top: 10px;
+}
+
+.myModal {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.modal-dialogue {
+    width: 40%;
+    margin: 0 auto;
+}
+
+div.office {
+	width:30%;
+}
+
+label {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: right;
+    margin-right:15px;
+    float:left;
+}
+input {
+    height: 20px;
+    width: 300px;
+    border: 1px solid #000;
+    margin-top: 10px;
+}

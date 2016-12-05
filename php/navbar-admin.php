@@ -27,8 +27,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="homepage.php">Home</a></li>
-        <li><a href="profile.php">My Profile &nbsp <span class="badge"> <?php echo $perm; ?></a></li>
       </ul>
+      <form class="navbar-form navbar-left" action="profile.php" method="post">
+        <input type="hidden" value= <?php echo '"' . $_SESSION["voterID"] . '"'; ?> name="id">
+        <button type="submit">My Profile &nbsp <span class="badge"> <?php echo $perm; ?></span></button>
+      </form>
       <?php if ($perm == "ADMIN"){ ?>
         <form class="navbar-form navbar-left" action="search.php" method="post">
           <div class="form-group">
@@ -39,10 +42,59 @@
       <?php } ?>
       <ul class="nav navbar-nav navbar-right">
         <?php if ($perm == "ADMIN" || $perm == "CM"){ ?>
-          <li><a href="create_election.php">Create Election&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp| 
+          <li><a data-toggle="modal" href="#election-modal">Create Election&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|
+        <?php } ?>
+        <?php if($_SESSION["valid"] == 0){ ?>
+          <li><a data-toggle="modal" href="#validate-account">Validate Account!&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|
         <?php } ?>
         <li><a href="logout.php">Log out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<!-- Create Election Modal -->
+<div id="election-modal" class="modal fade bd-example-modal-sm" role="dialogue">
+    <div class="modal-dialogue">
+        <div class="modal-content">
+            <div class="myModal">
+                <h1 class="modalTitle">Choose Number of Races</h1>
+                <hr>
+                <form action="../php/create_election.php" method="post">
+                    <div class="form-group">
+                        <input type="number" min="1" max="10" class="form-control thin" id="num_races" name="num_races">
+                        <span>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Election Modal -->
+<div id="validate-account" class="modal fade bd-example-modal-sm" role="dialogue">
+    <div class="modal-dialogue">
+        <div class="modal-content">
+            <div class="myModal">
+                <h1 class="modalTitle">Please input validation code!</h1>
+                <hr>
+                <form action="validate.php" method="post">
+                    <div class="form-group">
+                        <input type="number" min="0" max="9999" class="form-control thin" id="code" name="code">
+                        <span>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </span>
+                    </div>
+                </form>
+
+                <div>
+                  <form action="resend.php" method="post">
+                    <button type="submit" class="btn btn-primary">Send new code!</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
