@@ -35,7 +35,7 @@
 
                         <!-- Panel Body -->
                         <div class="panel-body">
-                            <form action="php/login.php" method="post">
+                            <form action="php/login.php" name="login-form" method="post">
                                 <div class="form-group">
                                     <label for="email">Email address:</label>
                                     <input type="email" required="required" placeholder=<?php echo $email_fill; ?> class="form-control" id="email" name="email">
@@ -63,7 +63,7 @@
                         <div class="myModal">
                             <h1 class="modalTitle">Sign-up!</h1>
                             <hr>
-                            <form action="php/signup.php" method="post">
+                            <form action="php/signup.php" name="signup-form" method="post">
                                 <div class="form-group required">
                                     <label for="fn">First Name</label>
                                     <input type="text" class="form-control" id="fn" name="fn">

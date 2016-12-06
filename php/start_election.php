@@ -12,10 +12,18 @@
                 echo "Err no." . mysqli_connect_errno() . PHP_EOL;
             }
 
-$start = "UPDATE election SET 'active' = 1 where election_id =" . $_POST["election_id"];
+$start = "UPDATE `election` SET `active` = 1 where `election_id` = " . $_POST["election_id"];
+echo $start;
 
-$con->query($start);
+if($con->query($start)){
 
-header("location: homepage.php");
+    $_SESSION["election_id"] = $_POST["election_id"];
+    header("location: election.php");
+}
 
+
+else{
+    echo $con->errno;
+    echo $con->error;
+}
 ?>

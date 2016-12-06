@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php 
+	session_start(); 
 
 	/* Set up database connection */
 	define('DB_SERVER', 'localhost');
@@ -64,8 +65,12 @@
 	/* Validate that user does not already exist */
 
 	$validate = "SELECT * FROM users WHERE email = '" . $email . "'";
+	echo $validate;
 
-	$res = $con->query($validate);
+	if(!($res = $con->query($validate))){
+		echo $con->errno;
+		echo $con->error;
+	}
 
 	if($res->num_rows != 0){
 		$_SESSION["error"] = "User already exists";
@@ -94,9 +99,9 @@
 
 		/* Put new user into the database (need to generate voter id) -> $voterID */
 
-		$insert = "INSERT INTO users(`id`, `full_name`, `email`, `password`, `address`, `zipcode`, `permissions`, `dob`, `state`, `gender`, `party_aff`, `license_nmbr`, `ssn`, `passport_nmbr`, `valid`, `validation_code`) VALUES (" . $maxID . ", '" . $full_name . "', '" . $email . "', '" . $pass . "', '" . $add . "', " . $zip . ", " . $perm . ", '" . $date . "', '" . $state . "', " . $gen . ", " . $aff . ", " . $idString . ", 0, " . $validate . ")";
+		$insert = "INSERT INTO users(`id`, `full_name`, `email`, `password`, `address`, `zipcode`, `permissions`, `dob`, `state`, `gender`, `party_aff`, `license_nmbr`, `ssn`, `passport_nmbr`, `valid`, `validation_code`) VALUES (" . $maxID . ", '" . $full_name . "', '" . $email . "', '" . $pass . "', '" . $add . "', " . $zip . ", " . $perm . ", '" . $date . "', '" . $state . "', " . $gen . ", " . $aff . ", " . $idString . ", 0, " . $validation . ")";
 
-		$success = $con->query($insert);
+		$success = mysqli_query($con, $insert);
 
 		/* If successfully put into db, set session variables and redirect to homepage */
 		if($success){

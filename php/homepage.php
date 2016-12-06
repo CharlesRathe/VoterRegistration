@@ -70,45 +70,52 @@
 			</div>
 			<div>
 				<!-- Election Tabs -->
-				<form action="election.php" method="post">
-		  			<ul class="nav nav-tabs">
-						  	<li class="active" style="width:33%"><a data-toggle="tab" href="#current">Current Elections</a></li>
-							<li style="width:33%"><a data-toggle="tab" href="#future">Future Elections</a></li>
-							<li style="width:33%"><a data-toggle="tab" href="#past">Past Elections</a></li>
-		  			</ul>
-		  			<div class="tab-content">
-		  				<div id="current" class="tab-pane fade in active">
-		  					<div class="list-group">
-		  						<?php foreach($current as $c){ ?>
+	  			<ul class="nav nav-tabs">
+					  	<li class="active" style="width:33%"><a data-toggle="tab" href="#current">Current Elections</a></li>
+						<li style="width:33%"><a data-toggle="tab" href="#future">Future Elections</a></li>
+						<li style="width:33%"><a data-toggle="tab" href="#past">Past Elections</a></li>
+	  			</ul>
+	  			<div class="tab-content">
+	  				<div id="current" class="tab-pane fade in active">
+	  					<div class="list-group">
+	  						<?php foreach($current as $c){ ?>
+	  							<form action="election.php" method="post">
+	  								<input type = "hidden" name="election_id" value= <?php echo '"' . $c["election_id"] . '"'; ?>>
 			  						<button type="submit" class="list-group-item">
 			  							<span style="float:left"><i>Election ID: 	<?php echo $c["election_id"]; ?></i></span> 
 								  		<span style="float:right"><i>Office Title:  <?php echo $c["title"]; ?>      </i></span>
 								  	</button>
-							  	<?php } ?>
-							</div>
-		  				</div>
-		  				<div id="future"  class="tab-pane fade">
-		  					<div class="list-group">
-		  						<?php foreach($future as $f){ ?>
-			  						<button type="submit" class="list-group-item">
-			  							<span style="float:left"><i>Election ID: 	<?php echo $f["election_id"]; ?></i></span> 
-								  		<span style="float:right"><i>Office Title:  <?php echo $f["title"]; ?>      </i></span>
-								  	</button>
-							  	<?php } ?>
-							</div>
-		  				</div>
-		  				<div id="past"    class="tab-pane fade">      					
-		  					<div class="list-group">
-		  						<?php foreach($past as $p){ ?>
-			  						<button type="submit" name="election_id" value=<?php echo '"'.$p["election_id"] . '"'; ?> class="list-group-item">
-			  							<span style="float:left"><i>Election ID: 	<?php echo $p["election_id"]; ?></i></span> 
-								  		<span style="float:right"><i>Office Title:  <?php echo $p["title"]; ?>      </i></span>
-								  	</button>
-							  	<?php } ?>
-							</div>
+								  </form>
+						  	<?php } ?>
 						</div>
-		  			</div>
-		  		</form>
+	  				</div>
+	  				<div id="future"  class="tab-pane fade">
+	  					<div class="list-group">
+	  						<?php foreach($future as $f){ ?>
+	  						<form action="election.php" method="post">
+	  							<input type = "hidden" name="election_id" value= <?php echo '"' . $f["election_id"] . '"'; ?>>
+		  						<button type="submit" class="list-group-item">
+		  							<span style="float:left"><i>Election ID: 	<?php echo $f["election_id"]; ?></i></span> 
+							  		<span style="float:right"><i>Office Title:  <?php echo $f["title"]; ?>      </i></span>
+							  	</button>
+							  </form>
+						  	<?php } ?>
+						</div>
+	  				</div>
+	  				<div id="past"    class="tab-pane fade">      					
+	  					<div class="list-group">
+	  						<?php foreach($past as $p){ ?>
+	  						<form action="election.php" method="post">
+	  							<input type = "hidden" name="election_id" value= <?php echo '"' . $p["election_id"] . '"'; ?>>
+		  						<button type="submit" name="election_id" value=<?php echo '"'.$p["election_id"] . '"'; ?> class="list-group-item">
+		  							<span style="float:left"><i>Election ID: 	<?php echo $p["election_id"]; ?></i></span> 
+							  		<span style="float:right"><i>Office Title:  <?php echo $p["title"]; ?>      </i></span>
+							  	</button>
+							  </form>
+						  	<?php } ?>
+						</div>
+					</div>
+	  			</div>
 		  	</div>
        <!-- Alerts -->
         <?php 

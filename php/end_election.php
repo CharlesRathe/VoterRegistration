@@ -17,7 +17,7 @@ $start = "UPDATE `election` SET`active`=0,`completed`=1 WHERE election_id =" . $
 echo $start;
 
 $con->query($start);
-
-header("location: homepage.php");
+$_SESSION["election_id"] = $_POST["election_id"];
+header("location: election.php");
 
 ?>

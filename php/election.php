@@ -36,6 +36,15 @@
                 echo "Err no." . mysqli_connect_errno() . PHP_EOL;
             }
 
+            $voted = "SELECT * FROM uservote as uv, ballot as b, raceballot as rb, races as r where uv.users_id = " . $_SESSION["voterID"] . " and b.ballot_id = uv.ballot_id and rb.ballot_id = b.ballot_id and rb.race_id = r.race_id and r.election_id = " . $_POST["election_id"];
+            $vote_res = mysqli_query($con, $voted);
+            if($vote_res->num_rows == 0){
+                $has_voted = 0;
+            }
+
+            else{
+                $has_voted = 1;
+            }
             $races = [];
 
             // Get election info
@@ -109,7 +118,7 @@
                                 <form action="vote.php" method = "post">
                                     <div class="tab-content">
                                         <br>
-                                        <?php if($status == "completed"){ ?>
+                                        <?php if($status == "open"){ ?>
                                             <?php foreach($races as $race){ 
 
                                                 // For each race, get candidates
@@ -121,23 +130,35 @@
 
                                                 echo '<div id="tab_' . $race . '" class="tab-pane fade in'; if($race == $races[0]){echo ' active"';} else{echo '"';}?> >
                                                     <?php echo $office; ?>
-                                                    <?php echo "Candidates: ";
+                                                    <?php echo "Candidates: <hr>" ;
+
                                                         foreach($candidates as $candidate){
                                                             if($num_can > 1){ 
-                                                                if ($status =="open" && $_SESSION["permissions"] == 3){ ?>
+                                                                if ($status =="open"){ ?>
                                     
                                                                     <div class="form-group">
                                                                         <input type="hidden" name="num_races" value=<?php echo '"' . $race_num . '"'; ?>>
                                                                         <input type="hidden" name="election_id" value=<?php echo $_POST["election_id"]; ?>>
                                                                         <input type="hidden" name=<?php echo '"race_id_' . array_search($race, $races)  . '"'; ?> value=<?php echo $race; ?>>
-                                                                        <input type="radio" name=<?php echo '"race_' . $race . '"'; ?> value= <?php echo '"' . $candidate . '"'; ?>><?php echo $candidate; ?><br>
+                                                                        <input type="radio" name=<?php echo '"candidates[' . $race . ']"'; ?> value= <?php echo '"' . $candidate . '"'; ?>><?php echo $candidate; ?><br>
+                                                                        <?php $query = "SELECT * from candidates where candidate_name = '" . $candidate . "'";
+                                                         
+                                                                        $res4 = mysqli_query($con, $query);
+                                                                        $row4 = $res4->fetch_assoc();
+                                                                        echo '<br>';
+                                                                        echo $row4["candidate_state"];
+                                                                        echo '<br>';
+                                                                        echo $row4["candidate_bio"];
+                                                                        ?>
                                                                     </div>
+                                                                    <hr>
                                                                <?php }
                                                                 else{ ?>
                                                                     <div class="form-group">
                                                                         <input type="hidden" name="num_races" value=<?php echo '"' . $race_num . '"'; ?>>
                                                                         <input type="hidden" name="election_id" value=<?php echo $_POST["election_id"]; ?>>
-                                                                        <input type="radio" name=<?php echo '"race_' . $race . '"'; ?> value=<?php echo '"' . $candidate . '"'; ?>><?php echo $candidate; ?><br>
+                                                                        <input type="radio" name=<?php echo '"candidates[' . $race . ']"'; ?> value=<?php echo '"' . $candidate . '"'; ?>><?php echo $candidate; ?><br>
+
                                                                     </div>
                                                                <?php }
                                                             }    
@@ -147,7 +168,7 @@
                                                 </div>
                                             <?php } ?>
                                         <?php } ?>
-                                        <?php if ($status =="open" && $_SESSION["permissions" == 3 && $_SESSION["valid"]]){ ?>
+                                        <?php if ($status =="open" && $_SESSION["permissions"] == 3 && $_SESSION["valid"] && !$has_voted){ ?>
                                             <button class="btn btn-primary" type="submit" value="Submit">Vote!</button>
                                         <?php } ?>
                                     </div>
@@ -162,13 +183,13 @@
                                 </form>
                                 <?php }?>
                                 <br>
-                                <?php if($status == "not started"){ ?>
+                                <?php if($status == "not started" && $_SESSION["permissions"] < 3){ ?>
                                     <form action="start_election.php" method="post">
                                         <input type="hidden" name="election_id" value= <?php echo $_POST["election_id"]; ?>>
                                         <button class="btn btn-success" type="submit" value="Submit">Start Election</button>
                                     </form>
                                 <?php } 
-                                elseif($status == "open"){ ?>
+                                elseif($status == "open" && $_SESSION["permissions"] < 3){ ?>
                                     <hr>
                                     <form action="end_election.php" method="post">
                                         <input type="hidden" name="election_id" value= <?php echo $_POST["election_id"]; ?>>
@@ -181,11 +202,14 @@
                                         <button class="btn btn-success" type="submit" value="Submit">See Results</button>
                                     </form>
                               <?php  }
+
+                                if($_SESSION["permissions"] < 3){
                                 ?>
                                     <hr>
                                     <button data-toggle="modal" href="#addPrecinct">Add Precincts</button>
                                     <br><br>
                                     <button data-toggle="modal" href="#addCandidate">Add Candidate</button>
+                               <?php } ?>
                         </div>
                     </div>
                 </div>
